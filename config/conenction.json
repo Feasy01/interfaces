@@ -1,0 +1,35 @@
+{
+    "spi-1": {},
+    "spi-2": {},
+    "spi-3": {},
+    "i2c-1": {},
+    "can-1": {
+        "Rpi": {
+            "pin": [
+                12,
+                13
+            ]
+        }
+    },
+    "gpio-error": {
+        "Expander-Microcontroller": {
+            "id": 1,
+            "pin": [
+                1,
+                2,
+                3,
+                4
+            ]
+        }
+    },
+    "pcie-1": {},
+    "spi-4": {
+        "Digital-Discovery-Multiplex": {
+            "id": 1,
+            "pin": [
+                1,
+                2
+            ]
+        }
+    }
+}
