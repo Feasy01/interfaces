@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Gpio(ABC):
+class GPIO(ABC):
     @abstractmethod
     def read(self,pin) -> (bool,bytes):
         pass

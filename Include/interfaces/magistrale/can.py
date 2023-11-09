@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-class Uart(ABC):
+class CAN(ABC):
     @abstractmethod
-    def read_uart(self):
+    def read_can(self) -> (bool, bytearray):
         pass
     @abstractmethod
-    def write_uart(self):
+    def write_can(self) -> bool:
         pass

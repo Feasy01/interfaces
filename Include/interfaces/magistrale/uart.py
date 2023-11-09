@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-class I2c(ABC):
+class UART(ABC):
     @abstractmethod
-    def read_i2c(self) -> (bool, bytearray):
+    def read_uart(self):
         pass
     @abstractmethod
-    def write_i2c(self) -> bool:
+    def write_uart(self):
         pass

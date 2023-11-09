@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-class Spi(ABC):
+class I2C(ABC):
     @abstractmethod
-    def read_spi(self) -> (bool, bytearray):
+    def read_i2c(self) -> (bool, bytearray):
         pass
     @abstractmethod
-    def write_spi(self):
+    def write_i2c(self) -> bool:
         pass
