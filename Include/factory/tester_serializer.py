@@ -14,10 +14,9 @@ class ControllerFactory:
                 class_name,instance_vars = cfg[x].popitem()
                 # print(class_name,instance_vars)
                 if class_name in available_controllers:
-                    print(class_name)
-                    instance = available_controllers[class_name].assign_instance(**instance_vars)
+                    instance = available_controllers[class_name].assign_instance(x,**instance_vars)
                     dut_dict[x] = instance
             except Exception:
                 pass
-        return
+        return dut_dict
             # print(self._cfg[x])
