@@ -138,6 +138,8 @@ Scripts/
 # mkdocs documentation
 /site
 
+
+bin/
 # mypy
 .mypy_cache/
 .dmypy.json
