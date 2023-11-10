@@ -1,36 +1,39 @@
 import os
-from ..interfaces.magistrale.can import *
-from ..interfaces.magistrale.i2c import *
-from ..interfaces.magistrale.uart import *
-from ..interfaces.magistrale.spi import *
-from ..interfaces.magistrale.gpio import *
+from ..interface.magistrale.spi import SPI
+from ..interface.magistrale.i2c import *
+from ..interface.magistrale.uart import *
+from ..interface.magistrale.spi import *
+from ..interface.magistrale.gpio import *
 from ..config.CfgParserJson import *
 from ..factory.tester_serializer import ControllerFactory
 class TesterManager:
     def __init__(self,cfg :os.PathLike) -> None:
-        self._controllerFactory = ControllerFactory(CfgParserJson.parse_cfg(cfg))
-        self._dut = self._controllerFactory.generate_dut()
+        self._dut = ControllerFactory.generate_controllers_from_cfg(cfg)
         pass
     
+    def write_can(self,device:str):
+        self._dut[str].write_can(str)
+    def read_can(self,device:str):
+        self._dut[str].read_can(str)
+    def write_i2c(self,device:str):
+        self._dut[str].write_i2c(str)
 
-    def write_can(self,controller:CAN,device:str):
+    def read_i2c(self, device:str):
+        self._dut[str].read_i2c(str)
+
+    def write_uart(self, device:str):
+        self._dut[str].wriete_uart(str)
+
+    def read_uart(self ,device:str):
+        self._dut[str].read_uart(str)
+
+    def write_spi(self,device:str) -> (bool):
+        self._dut[str].write_spi(str)
+    def read_spi(self,device:str):
+        self._dut[str].read_spi(str)
+        
+    def write_gpio(self, device:str):
+        self._dut[str].write_gpio(str)
         pass
-    def read_can(self,controller:CAN ,device:str):
-        pass
-    def write_i2c(self,controller:I2C,device:str):
-        pass
-    def read_i2c(self,controller:I2C, device:str):
-        pass
-    def write_uart(self,controller:UART, device:str):
-        pass
-    def read_uart(self,controller:UART ,device:str):
-        pass
-    def write_spi(self,controller : SPI,device:str) -> (bool):
-        controller.spi_write()
-        pass
-    def read_spi(self,controller:SPI,device:str):
-        pass
-    def write_gpio(self,controller:GPIO, device:str):
-        pass
-    def read_gpio(self,controller:GPIO,device:str):
-        pass
+    def read_gpio(self,device:str):
+        self._dut[str].read_can(str)

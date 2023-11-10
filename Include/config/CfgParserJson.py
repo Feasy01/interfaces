@@ -1,4 +1,4 @@
-from ..interfaces.config.cfg_parser import CfgParser
+from ..interface.config.cfg_parser import CfgParser
 import json
 class CfgParserJson(CfgParser):
     @staticmethod

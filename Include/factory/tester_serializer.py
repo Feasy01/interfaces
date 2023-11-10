@@ -1,29 +1,23 @@
-from ..controllers.DigitalDIscoveryMultiplex import DigitalDiscoveryMultiplex
+# form ..Include.controllers import DigitalDiscoveryMultiplex
+import os
+import importlib
+import inspect
+import pathlib
+from ..factory.ControllerParser import ControllerParser
 class ControllerFactory:
-    def __init__(self,cfg:dict) -> None:
-        self._cfg = cfg
-        self.controller_factory_from_cfg()
-        pass
-
-
-
-
-    def controller_factory_from_cfg(self):
+    @staticmethod
+    def generate_controllers_from_cfg(cfg):
         dut_dict = {}
-        for x in self._cfg.keys():
-            class_name,instance_vars = self._cfg[x].popitem()
-            # disct =instance_vars
-            instance = globals()[class_name](**instance_vars)
-            print(instance)
+        available_controllers:dict = ControllerParser.dict_of_controllers()
+        for x in cfg.keys():
             try:
-                class_name,instance_vars = self._cfg[x].popitem()
+                class_name,instance_vars = cfg[x].popitem()
                 # print(class_name,instance_vars)
-                if class_name in globals():
-                    disct =instance_vars
-                    instance = globals()[class_name](instance_vars)
-                    print(instance)
-                    # dut_dict[x] = instance
+                if class_name in available_controllers:
+                    print(class_name)
+                    instance = available_controllers[class_name].assign_instance(**instance_vars)
+                    dut_dict[x] = instance
             except Exception:
-                print('empty key')
-        print(dut_dict)
+                pass
+        return
             # print(self._cfg[x])
