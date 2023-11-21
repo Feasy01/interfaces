@@ -5,9 +5,7 @@ from ..interface.magistrale.uart import UART
 
 class ExampleController(CAN,I2C,SPI,UART):
     def __init__(self) -> None:
-        self._Discovery = 'mock'
-        # self._Discovery.someInitialization
-    
+        pass
  
     def read_can(self) ->(bool, bytes):
         pass

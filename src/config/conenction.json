@@ -1,0 +1,45 @@
+{
+    "can-1": {
+        "DigitalDiscoveryMultiplex": {
+            "id":1,
+            "settings":{
+            	"pin":[
+                	12,
+                	13
+            ],
+            	"frequency":100000
+        
+        }
+        }
+    },
+    "i2c-2": {
+        "DigitalDiscoveryMultiplex": {
+            "id": 1,
+            "settings":{
+            	"pin": [
+                	5,
+                	6
+            ],
+                "frequency":100000    }
+        }
+    },
+    "spi-4": {
+        "DigitalDiscoveryMultiplex": {
+            "id": 1,
+            "settings":{
+            	"pin": [
+                	1,
+                	2
+            ]}
+        }
+    },
+    "spi-5":{
+        "DigitalDiscoveryMultiplex":{
+            "id":1,
+            "settings":{
+                "pin":[3,4],
+                "frequency":100000
+            }
+        }
+    }
+}
