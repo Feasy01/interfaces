@@ -1,4 +1,13 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+
+@dataclass
+class SPIConfig:
+    clk:int
+    miso:int
+    mosi:int
+    cs:int
+    frequency:int
 
 class SPI(ABC):
     @abstractmethod
@@ -7,3 +16,7 @@ class SPI(ABC):
     @abstractmethod
     def write_spi(self):
         pass
+    
+    # @abstractmethod
+    # def _configure_spi(self,settings:SPIConfig) -> None:
+    #     pass

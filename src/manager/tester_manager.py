@@ -67,9 +67,9 @@ class TesterManager(CAN,SPI,I2C,UART):
             print(f'{device} does not have a correlating controller, please check your cfg file')
             pass
     
-    def read_spi(self,device:str):
+    def read_spi(self,device:str,size):
         try:
-            self._dut[device].read_spi(device)  
+            self._dut[device].read_spi(device,size)  
         except KeyError as e:
             print(f'{device} does not have a correlating controller, please check your cfg file')
             pass
