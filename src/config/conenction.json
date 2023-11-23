@@ -1,6 +1,6 @@
 {
     "can-1": {
-        "DigitalDiscoveryMultiplex": {
+        "DigitalDiscoveryMultiplexController": {
             "id":1,
             "settings":{
             	"pin":[
@@ -13,7 +13,7 @@
         }
     },
     "i2c-2": {
-        "DigitalDiscoveryMultiplex": {
+        "DigitalDiscoveryMultiplexController": {
             "id": 1,
             "settings":{
             	"pin": [
@@ -24,7 +24,7 @@
         }
     },
     "spi-4": {
-        "DigitalDiscoveryMultiplex": {
+        "DigitalDiscoveryMultiplexController": {
             "id": 1,
             "settings":{
             	"pin": [
@@ -36,7 +36,7 @@
         }
     },
     "spi-5":{
-        "DigitalDiscoveryMultiplex":{
+        "DigitalDiscoveryMultiplexController":{
             "id":1,
             "settings":{
                 "pin":[3,4],

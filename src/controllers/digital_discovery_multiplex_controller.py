@@ -1,50 +1,49 @@
-from ..interface.magistrale.can import CAN
-from ..interface.magistrale.i2c import I2C
-from ..interface.magistrale.spi import SPI
-from ..interface.magistrale.uart import UART
+from src.controllers.base_controller import BaseController
+from src.interface.base_interface import Settings
+from ..interface.can import CAN,CANSettings
+from ..interface.i2c import I2C,I2CSettings
+from ..interface.spi import SPI, SPISettings
+from ..interface.uart import UART, UARTSettings
+from ..interface.qspi import QSPI, QSPISettings
 from ctypes import *
 import math
 import sys
 import time
 dwf:CDLL = cdll.LoadLibrary("libdwf.so")
 
-class DigitalDiscoveryMultiplex(CAN,I2C,UART,SPI):
+class DigitalDiscoveryMultiplexController(CAN,I2C,UART,SPI,QSPI,BaseController):
     exisiting_instances:dict = {}
     """
     Kontroller do Digital dicovery + multiplex
     Klasa jest fabryka obiektow, trzyma instancje w wewnetrznej pamieci i zwraca wskazniki do nich
     """ 
 
-    @classmethod
-    def assign_instance(cls,
-                        interface:str, 
-                        id:int,
-                        settings:dict) -> object:
-        if id in cls.exisiting_instances:
-            cls.exisiting_instances[id].settings[interface]=settings
-            return cls.exisiting_instances[id]
-        else:
-            instance = cls.__new__(cls)
-            instance._init(interface,id,settings)
-            cls.exisiting_instances[id]=instance
-            return instance
+    # @classmethod
+    # def assign_instance(cls,
+    #                     interface:str, 
+    #                     id:int,
+    #                     settings:dict) -> object:
+    #     if id in cls.exisiting_instances:
+    #         cls.exisiting_instances[id].settings[interface]=settings
+    #         return cls.exisiting_instances[id]
+    #     else:
+    #         instance = cls.__new__(cls)
+    #         instance._init(interface,id,settings)
+    #         cls.exisiting_instances[id]=instance
+    #         return instance
 
-    def __init__(self)->None:
-        raise NotImplementedError("please use assign_instance classmethod to get an instance of this object")
-
-    def _init(self,
-              interface:str,
-              id:int,
-              settings:dict) -> None:
-        self.settings:dict={interface:settings}
-        self._id:int = id
+    def __init__(self):
+        super().__init__()
         self.hdwf:c_int = c_int()
         dwf.FDwfDeviceOpen(c_int(-1), byref(self.hdwf))
         if self.hdwf.value == 0:
-            print("failed to open device")
             szerr:[c_char] = create_string_buffer(512)
             dwf.FDwfGetLastErrorMsg(szerr)
-            print(str(szerr.value))
+            assert 0,(str(szerr.value))
+
+    def register_device(self, interface_name:str, settings:Settings):
+        super().register_device(interface_name,settings)
+
 
     def read_can(self, device) ->(bool, bytes):
         self._configure_can(self.settings[device])
@@ -86,7 +85,6 @@ class DigitalDiscoveryMultiplex(CAN,I2C,UART,SPI):
         dwf.FDwfDigitalCanTx(self.hdwf, c_int(0x3FD), c_int(0), c_int(0), c_int(len(rgbTX)), rgbTX) 
         print(rgbTX[0])
         pass
-
 
     def read_i2c(self,device,size,address:c_ubyte = 0x1D)->(bool, bytes):
         iNak = c_int()
@@ -147,56 +145,62 @@ class DigitalDiscoveryMultiplex(CAN,I2C,UART,SPI):
         rgTX = create_string_buffer(f'{data}')
         dwf.FDwfDigitalUartTx(self.hdwf, rgTX, c_int(sizeof(rgTX)-1)) # send text, trim zero ending
         pass
+    def write_qspi(self,settings:QSPISettings) -> None:
+        pass
+    def read_qspi(self,settings:QSPISettings) -> None:
+        pass
 
-    def _configure_can(self,settings)-> None:
+
+
+    def _configure_can(self,settings:CANSettings)-> None:
         try:
-            dwf.FDwfDigitalCanRateSet(self.hdwf, c_double(settings["frequency"])) # 1MHz
+            dwf.FDwfDigitalCanRateSet(self.hdwf, c_double(settings.frequency)) # 1MHz
             dwf.FDwfDigitalCanPolaritySet(self.hdwf, c_int(0)) # normal
-            dwf.FDwfDigitalCanTxSet(self.hdwf, c_int(settings["pin"][0])) # TX 
-            dwf.FDwfDigitalCanRxSet(self.hdwf, c_int(settings["pin"][1])) # RX 
+            dwf.FDwfDigitalCanTxSet(self.hdwf, c_int(settings.tx)) # TX 
+            dwf.FDwfDigitalCanRxSet(self.hdwf, c_int(settings.rx)) # RX 
             dwf.FDwfDigitalCanTx(self.hdwf, c_int(-1), c_int(0), c_int(0), c_int(0), None) # initialize TX, drive with idle level
     #                    HDWF *ID   *Exte *Remo *DLC  *rgRX  cRX      *Status 0 = no data, 1 = data received, 2 = bit stuffing error, 3 = CRC error
             dwf.FDwfDigitalCanRx(self.hdwf, None, None, None, None, None, c_int(0), None) # initialize RX reception
         except KeyError:
             print('some settings not defined for can, please see the documentation and make sure the config file follows it.')
 
-    def _configure_i2c(self,settings,iNak:c_int)->None:
-        dwf.FDwfDigitalI2cRateSet(self.hdwf, c_double(settings["frequency"]))# frequency
-        dwf.FDwfDigitalI2cSclSet(self.hdwf, c_int(settings["pin"][0])) # SCL = DIO-0
-        dwf.FDwfDigitalI2cSdaSet(self.hdwf, c_int(settings["pin"][0])) # SDA = DIO-1
+    def _configure_i2c(self,settings:I2CSettings,iNak:c_int)->None:
+        dwf.FDwfDigitalI2cRateSet(self.hdwf, c_double(settings.frequency))# frequency
+        dwf.FDwfDigitalI2cSclSet(self.hdwf, c_int(settings.scl)) # SCL = DIO-0
+        dwf.FDwfDigitalI2cSdaSet(self.hdwf, c_int(settings.sda)) # SDA = DIO-1
         dwf.FDwfDigitalI2cClear(self.hdwf, byref(iNak))
         if iNak.value == 0:
             print("I2C bus error. Check the pull-ups.")
-    def _configure_spi(self,settings) -> None:
-        dwf.FDwfDigitalSpiFrequencySet(self.hdwf, c_double(settings["frequency"]))
-        dwf.FDwfDigitalSpiClockSet(self.hdwf, c_int(settings["pin"][0]))
-        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(0), c_int(settings["pin"][1])) # 0 DQ0_MOSI_SISO 
-        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(1), c_int(settings["pin"][2])) # 1 DQ1_MISO 
-        dwf.FDwfDigitalSpiIdleSet(self.hdwf, c_int(0), c_int(settings["pin"][1])) # 0 DQ0_
-        dwf.FDwfDigitalSpiIdleSet(self.hdwf, c_int(1), c_int(settings["pin"][2])) # 0 DQ0_
+    def _configure_spi(self,settings:SPISettings) -> None:
+        dwf.FDwfDigitalSpiFrequencySet(self.hdwf, c_double(settings.frequency))
+        dwf.FDwfDigitalSpiClockSet(self.hdwf, c_int(settings.clk))
+        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(0), c_int(settings.mosi)) # 0 DQ0_MOSI_SISO 
+        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(1), c_int(settings.miso)) # 1 DQ1_MISO 
+        dwf.FDwfDigitalSpiIdleSet(self.hdwf, c_int(0), c_int(settings.mosi)) # 0 DQ0_
+        dwf.FDwfDigitalSpiIdleSet(self.hdwf, c_int(1), c_int(settings.miso)) # 0 DQ0_
         dwf.FDwfDigitalSpiModeSet(self.hdwf, c_int(0)) # SPI mode 
         dwf.FDwfDigitalSpiOrderSet(self.hdwf, c_int(1)) # 1 MSB first
-        dwf.FDwfDigitalSpiSelectSet(self.hdwf, c_int(0), c_int(settings["pin"][3])) # CS DIO-0, idle high
+        dwf.FDwfDigitalSpiSelectSet(self.hdwf, c_int(0), c_int(settings.cs)) # CS DIO-0, idle high
         dwf.FDwfDigitalSpiWriteOne(self.hdwf, c_int(1), c_int(0), c_int(0)) # start driving the channels, clock and data
 
-    def _configure_spi_quad(self,settings) -> None:
-        dwf.FDwfDigitalSpiFrequencySet(self.hdwf, c_double(settings["frequency"]))
-        dwf.FDwfDigitalSpiClockSet(self.hdwf, c_int(settings["pin"][0]))
-        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(0), c_int(settings["pin"][1])) # 0 DQ0_MOSI_SISO = 
-        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(1), c_int(settings["pin"][2])) # 1 DQ1_MISO = 
-        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(2), c_int(settings["pin"][3])) # 2 DQ2 
-        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(3), c_int(settings["pin"][4])) # 3 DQ3 
+    def _configure_qspi(self,settings:QSPISettings) -> None:
+        dwf.FDwfDigitalSpiFrequencySet(self.hdwf, c_double(settings.frequency))
+        dwf.FDwfDigitalSpiClockSet(self.hdwf, c_int(settings.clk))
+        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(0), c_int(settings.dq0))# 0 DQ0_MOSI_SISO = 
+        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(1), c_int(settings.dq1)) # 1 DQ1_MISO = 
+        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(2), c_int(settings.dq2)) # 2 DQ2 
+        dwf.FDwfDigitalSpiDataSet(self.hdwf, c_int(3), c_int(settings.dq3)) # 3 DQ3 
         dwf.FDwfDigitalSpiModeSet(self.hdwf, c_int(0)) # SPI mode 
         dwf.FDwfDigitalSpiOrderSet(self.hdwf, c_int(1)) # 1 MSB first
         #                             DIO       value: 0 low, 1 high, -1 high impedance
-        dwf.FDwfDigitalSpiSelectSet(self.hdwf, c_int(0), c_int(settings["pin"][5])) #            # cDQ 0 SISO, 1 MOSI/MISO, 2 dual, 4 quad, // 1-32 bits / word
+        dwf.FDwfDigitalSpiSelectSet(self.hdwf, c_int(0), c_int(settings.cs)) #            # cDQ 0 SISO, 1 MOSI/MISO, 2 dual, 4 quad, // 1-32 bits / word
         #                                cDQ       bits     data
         dwf.FDwfDigitalSpiWriteOne(self.hdwf, c_int(4), c_int(0), c_int(0)) # start driving the channels
-    def _configure_uart(self,settings,cRX,fParity) -> None:        
+    def _configure_uart(self,settings:UARTSettings,cRX,fParity) -> None:        
         # configure the I2C/TWI, default settings
-        dwf.FDwfDigitalUartRateSet(self.hdwf, c_double(settings["frequency"])) # 9.6kHz
-        dwf.FDwfDigitalUartTxSet(self.hdwf, c_int(settings["pin"][0])) # TX = DIO-0
-        dwf.FDwfDigitalUartRxSet(self.hdwf, c_int(settings["pin"][1]))# RX = DIO-1
+        dwf.FDwfDigitalUartRateSet(self.hdwf, c_double(settings.frequency)) # 9.6kHz
+        dwf.FDwfDigitalUartTxSet(self.hdwf, c_int(settings.tx)) # TX = DIO-0
+        dwf.FDwfDigitalUartRxSet(self.hdwf, c_int(settings.rx))# RX = DIO-1
         dwf.FDwfDigitalUartBitsSet(self.hdwf, c_int(8)) # 8 bits
         dwf.FDwfDigitalUartParitySet(self.hdwf, c_int(0)) # 0 no parity, 1 even, 2 odd, 3 mark (high), 4 space (low)
         dwf.FDwfDigitalUartStopSet(self.hdwf, c_double(1)) # 1 bit stop length

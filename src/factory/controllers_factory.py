@@ -9,11 +9,11 @@ class ControllerFactory:
     Laczy controller parser i plik cfg -> dla zdefiniowanych magistrali i gpios na ducie inicjalizuje odpowiednie sterowniki.
     """
 
-
     @staticmethod
     def generate_controllers_from_cfg(cfg)->dict:
         dut_dict:dict = {}
         available_controllers:dict = ControllerParser.dict_of_controllers()
+        print(available_controllers)
         for interface in cfg.keys():
             try:
                 class_name,instance_vars = cfg[interface].popitem()

@@ -1,7 +1,7 @@
-from ..interface.magistrale.can import CAN
-from ..interface.magistrale.i2c import I2C
-from ..interface.magistrale.spi import SPI
-from ..interface.magistrale.uart import UART
+from ..interface.can import CAN
+from ..interface.i2c import I2C
+from ..interface.spi import SPI
+from ..interface.uart import UART
 
 class ExampleController(CAN,I2C,SPI,UART):
     def __init__(self) -> None:

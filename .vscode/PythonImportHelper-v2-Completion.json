@@ -1,0 +1,741 @@
+[
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Interfaces",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Interfaces",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Interfaces",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Interfaces",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Interfaces",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Interfaces",
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "isExtraImport": true,
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "BaseController",
+        "importPath": "src.controllers.base_controller",
+        "description": "src.controllers.base_controller",
+        "isExtraImport": true,
+        "detail": "src.controllers.base_controller",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "ctypes",
+        "description": "ctypes",
+        "isExtraImport": true,
+        "detail": "ctypes",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "ctypes",
+        "description": "ctypes",
+        "isExtraImport": true,
+        "detail": "ctypes",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "importlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "importlib",
+        "description": "importlib",
+        "detail": "importlib",
+        "documentation": {}
+    },
+    {
+        "label": "inspect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "inspect",
+        "description": "inspect",
+        "detail": "inspect",
+        "documentation": {}
+    },
+    {
+        "label": "pathlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "auto",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "CfgParser",
+        "importPath": "src.interface.config.cfg_parser",
+        "description": "src.interface.config.cfg_parser",
+        "isExtraImport": true,
+        "detail": "src.interface.config.cfg_parser",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "ModuleType",
+        "importPath": "types",
+        "description": "types",
+        "isExtraImport": true,
+        "detail": "types",
+        "documentation": {}
+    },
+    {
+        "label": "ModuleType",
+        "importPath": "types",
+        "description": "types",
+        "isExtraImport": true,
+        "detail": "types",
+        "documentation": {}
+    },
+    {
+        "label": "TesterManager",
+        "importPath": "src.manager.tester_manager",
+        "description": "src.manager.tester_manager",
+        "isExtraImport": true,
+        "detail": "src.manager.tester_manager",
+        "documentation": {}
+    },
+    {
+        "label": "BaseController",
+        "kind": 6,
+        "importPath": "src.controllers.base_controller",
+        "description": "src.controllers.base_controller",
+        "peekOfCode": "class BaseController:\n    def __init__(self):\n        self.settings:dict ={}\n    def register_device(self,interface_name:str,settings:Settings):\n        self.settings[interface_name] = settings",
+        "detail": "src.controllers.base_controller",
+        "documentation": {}
+    },
+    {
+        "label": "DigitalDiscoveryMultiplexController",
+        "kind": 6,
+        "importPath": "src.controllers.digital_discovery_multiplex_controller",
+        "description": "src.controllers.digital_discovery_multiplex_controller",
+        "peekOfCode": "class DigitalDiscoveryMultiplexController(CAN,I2C,UART,SPI,QSPI,BaseController):\n    exisiting_instances:dict = {}\n    \"\"\"\n    Kontroller do Digital dicovery + multiplex\n    Klasa jest fabryka obiektow, trzyma instancje w wewnetrznej pamieci i zwraca wskazniki do nich\n    \"\"\" \n    @classmethod\n    def assign_instance(cls,\n                        interface:str, \n                        id:int,",
+        "detail": "src.controllers.digital_discovery_multiplex_controller",
+        "documentation": {}
+    },
+    {
+        "label": "dwf:CDLL",
+        "kind": 5,
+        "importPath": "src.controllers.digital_discovery_multiplex_controller",
+        "description": "src.controllers.digital_discovery_multiplex_controller",
+        "peekOfCode": "dwf:CDLL = cdll.LoadLibrary(\"libdwf.so\")\nclass DigitalDiscoveryMultiplexController(CAN,I2C,UART,SPI,QSPI,BaseController):\n    exisiting_instances:dict = {}\n    \"\"\"\n    Kontroller do Digital dicovery + multiplex\n    Klasa jest fabryka obiektow, trzyma instancje w wewnetrznej pamieci i zwraca wskazniki do nich\n    \"\"\" \n    @classmethod\n    def assign_instance(cls,\n                        interface:str, ",
+        "detail": "src.controllers.digital_discovery_multiplex_controller",
+        "documentation": {}
+    },
+    {
+        "label": "ExampleController",
+        "kind": 6,
+        "importPath": "src.controllers.example_controller",
+        "description": "src.controllers.example_controller",
+        "peekOfCode": "class ExampleController(CAN,I2C,SPI,UART):\n    def __init__(self) -> None:\n        pass\n    def read_can(self) ->(bool, bytes):\n        pass\n        return (True,b'returned value')\n    def write_can(self)->bool:\n        pass\n    def read_i2c()->(bool, bytes):\n        pass",
+        "detail": "src.controllers.example_controller",
+        "documentation": {}
+    },
+    {
+        "label": "ControllerFactory",
+        "kind": 6,
+        "importPath": "src.factory.controllers_factory",
+        "description": "src.factory.controllers_factory",
+        "peekOfCode": "class ControllerFactory:\n    \"\"\"\n    Laczy controller parser i plik cfg -> dla zdefiniowanych magistrali i gpios na ducie inicjalizuje odpowiednie sterowniki.\n    \"\"\"\n    @staticmethod\n    def generate_controllers_from_cfg(cfg)->dict:\n        dut_dict:dict = {}\n        available_controllers:dict = ControllerParser.dict_of_controllers()\n        print(available_controllers)\n        for interface in cfg.keys():",
+        "detail": "src.factory.controllers_factory",
+        "documentation": {}
+    },
+    {
+        "label": "InvertedControllerFactory",
+        "kind": 6,
+        "importPath": "src.factory.controllers_inverted_factory",
+        "description": "src.factory.controllers_inverted_factory",
+        "peekOfCode": "class InvertedControllerFactory:\n    \"\"\"\n    Laczy controller parser i plik cfg -> dla zdefiniowanych magistrali i gpios na ducie inicjalizuje odpowiednie sterowniki.\n    \"\"\"\n    @staticmethod\n    def generate_controllers_from_cfg(cfg)->dict:\n        dut_dict:dict = {}\n        available_controllers:dict = ControllerParser.dict_of_controllers()\n        avalable_interfaces:dict = InterfacesParser.dict_of_interfaces()\n        for controller in cfg:",
+        "detail": "src.factory.controllers_inverted_factory",
+        "documentation": {}
+    },
+    {
+        "label": "CfgParser",
+        "kind": 6,
+        "importPath": "src.interface.config.cfg_parser",
+        "description": "src.interface.config.cfg_parser",
+        "peekOfCode": "class CfgParser(ABC):\n    @staticmethod\n    @abstractmethod\n    def parse_cfg(cfg: str | os.PathLike) -> dict:\n        \"\"\"logic that parses cfg from given path to a dictionary\"\"\"\n        pass",
+        "detail": "src.interface.config.cfg_parser",
+        "documentation": {}
+    },
+    {
+        "label": "Interfaces",
+        "kind": 6,
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "peekOfCode": "class Interfaces(Enum):\n    CAN = \"CAN\"\n    GPIO = \"GPIO\"\n    I2C = \"I2C\"\n    QSPI = \"QSPI\"\n    SPI = \"SPI\"\n    UART = \"UART\"\n@dataclass\nclass Settings:\n    type: Interfaces",
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "kind": 6,
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "peekOfCode": "class Settings:\n    type: Interfaces\nclass Interface(ABC):\n    @property\n    @abstractmethod\n    def type(self) -> Interfaces:\n        \"\"\"each interface \"\"\"",
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "Interface",
+        "kind": 6,
+        "importPath": "src.interface.base_interface",
+        "description": "src.interface.base_interface",
+        "peekOfCode": "class Interface(ABC):\n    @property\n    @abstractmethod\n    def type(self) -> Interfaces:\n        \"\"\"each interface \"\"\"",
+        "detail": "src.interface.base_interface",
+        "documentation": {}
+    },
+    {
+        "label": "CANSettings",
+        "kind": 6,
+        "importPath": "src.interface.can",
+        "description": "src.interface.can",
+        "peekOfCode": "class CANSettings(Settings):\n    type:Interfaces.CAN\n    tx:int\n    rx:int\n    frequency:int = 1000000\nclass CAN(ABC):\n    @abstractmethod\n    def read_can(self) -> (bool, bytearray):\n        pass\n    @abstractmethod",
+        "detail": "src.interface.can",
+        "documentation": {}
+    },
+    {
+        "label": "CAN",
+        "kind": 6,
+        "importPath": "src.interface.can",
+        "description": "src.interface.can",
+        "peekOfCode": "class CAN(ABC):\n    @abstractmethod\n    def read_can(self) -> (bool, bytearray):\n        pass\n    @abstractmethod\n    def write_can(self) -> bool:\n        pass",
+        "detail": "src.interface.can",
+        "documentation": {}
+    },
+    {
+        "label": "GPIOSettings",
+        "kind": 6,
+        "importPath": "src.interface.gpio",
+        "description": "src.interface.gpio",
+        "peekOfCode": "class GPIOSettings(Settings):\n    type:Interfaces = field(default=Interfaces.GPIO, init = False)\n    pin:int\nclass GPIO(ABC):\n    @abstractmethod\n    def read(self,pin) -> (bool,bytes):\n        pass\n    @abstractmethod\n    def sample(self,pin,time_period) -> (bool , bytearray):\n        pass",
+        "detail": "src.interface.gpio",
+        "documentation": {}
+    },
+    {
+        "label": "GPIO",
+        "kind": 6,
+        "importPath": "src.interface.gpio",
+        "description": "src.interface.gpio",
+        "peekOfCode": "class GPIO(ABC):\n    @abstractmethod\n    def read(self,pin) -> (bool,bytes):\n        pass\n    @abstractmethod\n    def sample(self,pin,time_period) -> (bool , bytearray):\n        pass",
+        "detail": "src.interface.gpio",
+        "documentation": {}
+    },
+    {
+        "label": "I2CSettings",
+        "kind": 6,
+        "importPath": "src.interface.i2c",
+        "description": "src.interface.i2c",
+        "peekOfCode": "class I2CSettings(Settings):\n    type:Interfaces = field(default=Interfaces.I2C, init = False)\n    scl:int\n    sda:int\n    frequency:int = 100000\nclass I2C(ABC):\n    @abstractmethod\n    def read_i2c(self) -> (bool, bytearray):\n        pass\n    @abstractmethod",
+        "detail": "src.interface.i2c",
+        "documentation": {}
+    },
+    {
+        "label": "I2C",
+        "kind": 6,
+        "importPath": "src.interface.i2c",
+        "description": "src.interface.i2c",
+        "peekOfCode": "class I2C(ABC):\n    @abstractmethod\n    def read_i2c(self) -> (bool, bytearray):\n        pass\n    @abstractmethod\n    def write_i2c(self) -> bool:\n        pass",
+        "detail": "src.interface.i2c",
+        "documentation": {}
+    },
+    {
+        "label": "QSPISettings",
+        "kind": 6,
+        "importPath": "src.interface.qspi",
+        "description": "src.interface.qspi",
+        "peekOfCode": "class QSPISettings(Settings):\n    type:Interfaces = field(default=Interfaces.QSPI, init = False)\n    dq0:int\n    dq1:int\n    dq2:int\n    da3:int\n    clk:int\n    cs:int\n    frequency:int = 100000\nclass QSPI(ABC):",
+        "detail": "src.interface.qspi",
+        "documentation": {}
+    },
+    {
+        "label": "QSPI",
+        "kind": 6,
+        "importPath": "src.interface.qspi",
+        "description": "src.interface.qspi",
+        "peekOfCode": "class QSPI(ABC):\n    def read_qspi(self)->None:\n        ...\n    def write_qspi(self) ->None:\n        ...",
+        "detail": "src.interface.qspi",
+        "documentation": {}
+    },
+    {
+        "label": "SPISettings",
+        "kind": 6,
+        "importPath": "src.interface.spi",
+        "description": "src.interface.spi",
+        "peekOfCode": "class SPISettings(Settings):\n    type:Interfaces = field(default=Interfaces.SPI, init = False)\n    clk:int\n    miso:int\n    mosi:int\n    cs:int\n    frequency:int\nclass SPI(ABC):\n    @abstractmethod\n    def read_spi(self) -> (bool, bytearray):",
+        "detail": "src.interface.spi",
+        "documentation": {}
+    },
+    {
+        "label": "SPI",
+        "kind": 6,
+        "importPath": "src.interface.spi",
+        "description": "src.interface.spi",
+        "peekOfCode": "class SPI(ABC):\n    @abstractmethod\n    def read_spi(self) -> (bool, bytearray):\n        pass\n    @abstractmethod\n    def write_spi(self):\n        pass\n    # @abstractmethod\n    # def _configure_spi(self,settings:SPIConfig) -> None:\n    #     pass",
+        "detail": "src.interface.spi",
+        "documentation": {}
+    },
+    {
+        "label": "UARTSettings",
+        "kind": 6,
+        "importPath": "src.interface.uart",
+        "description": "src.interface.uart",
+        "peekOfCode": "class UARTSettings(Settings):\n    type:Interfaces = field(default=Interfaces.UART, init = False)\n    tx:int\n    rx:int\n    frequency:int = 100000\nclass UART(ABC):\n    @abstractmethod\n    def read_uart(self):\n        pass\n    @abstractmethod",
+        "detail": "src.interface.uart",
+        "documentation": {}
+    },
+    {
+        "label": "UART",
+        "kind": 6,
+        "importPath": "src.interface.uart",
+        "description": "src.interface.uart",
+        "peekOfCode": "class UART(ABC):\n    @abstractmethod\n    def read_uart(self):\n        pass\n    @abstractmethod\n    def write_uart(self):\n        pass",
+        "detail": "src.interface.uart",
+        "documentation": {}
+    },
+    {
+        "label": "TesterManager",
+        "kind": 6,
+        "importPath": "src.manager.tester_manager",
+        "description": "src.manager.tester_manager",
+        "peekOfCode": "class TesterManager(CAN,SPI,I2C,UART):\n    \"\"\"\n    Menager przekazujacy zlecenia do odpowiednich kontrollerow.\n    \"\"\"\n    def __init__(self,cfg:os.PathLike) -> None:\n        self._dut = InvertedControllerFactory.generate_controllers_from_cfg(CfgParserJson.parse_cfg(cfg))\n        print(self._dut)\n        pass\n    def write_can(self,device:str,data:(c_ubyte))->None:\n        try:",
+        "detail": "src.manager.tester_manager",
+        "documentation": {}
+    },
+    {
+        "label": "CfgParserJson",
+        "kind": 6,
+        "importPath": "src.utils.parsers.cfg_json_parser",
+        "description": "src.utils.parsers.cfg_json_parser",
+        "peekOfCode": "class CfgParserJson(CfgParser):\n    @staticmethod\n    def parse_cfg(cfg: dict) -> dict:\n        with open(cfg) as f:\n            data = json.load(f)\n            return data",
+        "detail": "src.utils.parsers.cfg_json_parser",
+        "documentation": {}
+    },
+    {
+        "label": "ControllerParser",
+        "kind": 6,
+        "importPath": "src.utils.parsers.controllers_parser",
+        "description": "src.utils.parsers.controllers_parser",
+        "peekOfCode": "class ControllerParser:\n    \"\"\"\n    Parsuje folder controllers zawierajacy sterowniki obslugujace rozne urzadzenia, przekazuje dostepne jako dictionary\n    \"\"\"\n    @staticmethod\n    def dict_of_controllers()-> dict:\n        class_dict :dict= {}\n        path_to_controllers:str = 'src/controllers'\n        directory_path:str = os.path.join(os.getcwd(),\n                                          path_to_controllers) ",
+        "detail": "src.utils.parsers.controllers_parser",
+        "documentation": {}
+    },
+    {
+        "label": "InterfacesParser",
+        "kind": 6,
+        "importPath": "src.utils.parsers.supported_interfaces_parser",
+        "description": "src.utils.parsers.supported_interfaces_parser",
+        "peekOfCode": "class InterfacesParser:\n    \"\"\"\n    Parsuje folder interfaces zawierajacy sterowniki obslugujace rozne urzadzenia, przekazuje dostepne jako dictionary\n    \"\"\"\n    @staticmethod\n    def dict_of_interfaces()-> dict:\n        class_dict :dict= {}\n        path_to_interfaces:str = 'src/interface'\n        directory_path:str = os.path.join(os.getcwd(),\n                                          path_to_interfaces) ",
+        "detail": "src.utils.parsers.supported_interfaces_parser",
+        "documentation": {}
+    },
+    {
+        "label": "manager",
+        "kind": 5,
+        "importPath": "eksperyment",
+        "description": "eksperyment",
+        "peekOfCode": "manager = TesterManager('./src/config/connections-inverted.json')\nmanager.write_can(\"can-1\",(256,2,3,4,12,21,21,21,21,21,23,23,23,23,23))\nmanager.read_spi(\"MEMORY_devie_1\",16)",
+        "detail": "eksperyment",
+        "documentation": {}
+    }
+]

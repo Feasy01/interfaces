@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass,field
+from src.interface.base_interface import Settings, Interfaces
 
 @dataclass
-class SPIConfig:
+class SPISettings(Settings):
+    type:Interfaces = field(default=Interfaces.SPI, init = False)
     clk:int
     miso:int
     mosi:int

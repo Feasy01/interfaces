@@ -1,0 +1,54 @@
+[
+    {
+        "controller":"DigitalDiscoveryMultiplexController",
+        "devices":{
+            "MEMORY_devie_1": {
+                "type":"SPI",
+                "settings":{
+                    "clk":1,
+                    "miso":2,
+                    "mosi":4,
+                    "cs":3,
+                    "frequency":100000
+            
+            }
+            },"temepratureSensor-1":{
+                "type":"I2C",
+                "settings":{
+                    "scl":1,
+                    "sda":2,
+                    "frequency":1000000
+                }
+            }
+
+        }
+    },
+    {
+        "controller":"DigitalDiscoveryMultiplexController",
+        "devices":{
+            "siema_siema": {
+                "type":"SPI",
+                "settings":{
+                    "clk":1,
+                    "miso":2,
+                    "mosi":4,
+                    "cs":3,
+                    "frequency":100000
+            
+            }
+            },"wag-1":{
+                "type":"I2C",
+                "settings":{
+                    "scl":1,
+                    "sda":2,
+                    "frequency":1000000
+                }
+            }
+
+        }
+    }
+
+
+
+
+]
