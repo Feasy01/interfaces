@@ -15,3 +15,6 @@ class I2C(ABC):
     @abstractmethod
     def write_i2c(self) -> bool:
         pass
+    @abstractmethod
+    def spy_i2c(self,device) -> None:
+        ...

@@ -1,12 +1,18 @@
 from ..interface.can import CAN
 from ..interface.i2c import I2C
-from ..interface.spi import SPI
+from ..interface.spi import SPI,SPISettings
 from ..interface.uart import UART
-
-class ExampleController(CAN,I2C,SPI,UART):
+from ..interface.base_interface import Settings
+from .base_controller import BaseController
+import asyncio
+import time
+class ExampleController(BaseController,SPI):
     def __init__(self) -> None:
-        pass
- 
+        super().__init__()
+
+    def register_device(self, interface_name:str, settings:Settings):
+        super().register_device(interface_name,settings)
+    
     def read_can(self) ->(bool, bytes):
         pass
         return (True,b'returned value')
@@ -27,7 +33,19 @@ class ExampleController(CAN,I2C,SPI,UART):
     def read_spi(self)->(bool, bytes):
         pass
         return (True,b'returned value')
+    async def spy_spi(self,device,nSamples):
+        siema = 1
+        print('robie cos robie cos robie cos')
+        print('skonczylem cos robic')
+        time.sleep(1)
 
+        while True:
+            print('im doing something difficult')
+            await asyncio.sleep(1)
+            siema += 1
+            if siema ==10:
+                break
+        return True
 
     def write_spi(self)->bool:
         pass

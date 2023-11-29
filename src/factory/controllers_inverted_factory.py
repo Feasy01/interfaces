@@ -19,16 +19,11 @@ class InvertedControllerFactory:
         available_controllers:Dict[str,BaseController] = ControllerParser.dict_of_controllers()
         avalable_interfaces:dict = InterfacesParser.dict_of_interfaces()
         for controller in cfg:
-            print(controller['controller'])
-            print(available_controllers.keys())
             try:
                 controller_instance = available_controllers[controller["controller"]]()
             except KeyError:
                 raise(f'controller not defined in ./controllers')
-            print(controller)
-            print(controller["devices"])
             for device in controller["devices"]:
-                print(device)
                 settings_dataclass = _match_settings_to_dataclass(avalable_interfaces,controller["devices"][device])
                 controller_instance.register_device(device,settings_dataclass)
                 dut_dict[device] = {"controller":controller_instance,

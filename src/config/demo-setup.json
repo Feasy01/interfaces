@@ -1,0 +1,28 @@
+[
+    {
+        "controller":"ExampleController",
+        "devices":{
+            "demo-spi":{
+                "type":"SPI",
+                "settings":{        
+                            }
+            }
+
+
+        }
+    },
+    {
+        "controller":"ExampleController",
+        "devices":{
+            "demo-spi2":{
+                "type":"SPI",
+                "settings":{        
+                            }
+            }
+
+
+        }
+    }
+
+
+]

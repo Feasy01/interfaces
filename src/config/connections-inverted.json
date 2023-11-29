@@ -2,51 +2,42 @@
     {
         "controller":"DigitalDiscoveryMultiplexController",
         "devices":{
-            "MEMORY_devie_1": {
+            "spi-test": {
                 "type":"SPI",
                 "settings":{
-                    "clk":1,
-                    "miso":2,
-                    "mosi":4,
-                    "cs":3,
+                    "clk":25,
+                    "miso":27,
+                    "mosi":26,
+                    "cs":24,
                     "frequency":100000
             
             }
-            },"temepratureSensor-1":{
+            },"i2c-test":{
                 "type":"I2C",
                 "settings":{
-                    "scl":1,
-                    "sda":2,
-                    "frequency":1000000
+                    "scl":25,
+                    "sda":24,
+                    "frequency":100000
                 }
             }
 
         }
     },
     {
-        "controller":"DigitalDiscoveryMultiplexController",
+        "controller":"SSHController",
         "devices":{
-            "siema_siema": {
-                "type":"SPI",
+            "Rpi":{
+                "type":"SSH",
                 "settings":{
-                    "clk":1,
-                    "miso":2,
-                    "mosi":4,
-                    "cs":3,
-                    "frequency":100000
-            
-            }
-            },"wag-1":{
-                "type":"I2C",
-                "settings":{
-                    "scl":1,
-                    "sda":2,
-                    "frequency":1000000
+                    "hostname":"10.42.0.39",
+                    "username":"pi",
+                    "password":"root",
+                    "port":22
                 }
             }
-
         }
     }
+    
 
 
 

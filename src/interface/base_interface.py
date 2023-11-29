@@ -9,7 +9,7 @@ class Interfaces(Enum):
     QSPI = "QSPI"
     SPI = "SPI"
     UART = "UART"
-
+    SSH = "SSH"
 
 @dataclass
 class Settings:
