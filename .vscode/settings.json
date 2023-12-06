@@ -20,5 +20,8 @@
     },
     "peacock.color": "#349269",
     "editor.defaultFoldingRangeProvider": "ms-python.black-formatter",
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    }
 }

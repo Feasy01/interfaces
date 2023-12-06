@@ -1,14 +1,32 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from dataclasses import dataclass, field
-from src.interface.base_interface import Interfaces, Settings
+from src.interface.base_interface import Interfaces, Settings, Interface
+
+
 @dataclass
 class GPIOSettings(Settings):
-    type:Interfaces = field(default=Interfaces.GPIO, init = False)
-    pin:int
-class GPIO(ABC):
+    eInterface: Interfaces = field(default=Interfaces.GPIO, init=False)
+    pin: int
+    default: int
+
+
+class GPIO(Interface):
+    eInterface: Interfaces = Interfaces.GPIO
+
     @abstractmethod
-    def read(self,pin) -> (bool,bytes):
+    def read_gpio(self, pin) -> (bool, bytes):
         pass
+
     @abstractmethod
-    def sample(self,pin,time_period) -> (bool , bytearray):
-        pass
+    def record_gpio(
+        self,
+        pins: [GPIOSettings],
+        period_ms: int,
+        rising_edge: str = None,
+        falling_edge: str = None,
+    ) -> (bool, bytearray):
+        ...
+
+    def __init_subclass__(cls, **kwargs):
+        cls.eInterface = cls.eInterface | GPIO.eInterface
+        super().__init_subclass__(**kwargs)
