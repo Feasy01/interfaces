@@ -15,11 +15,11 @@ class UART(Interface):
     eInterface: Interfaces = Interfaces.UART
 
     @abstractmethod
-    def read_uart(self, device: str, data: bytes):
+    def read_uart(self, device: str, data: [int],time):
         pass
 
     @abstractmethod
-    def write_uart(self, device: str, data: bytes):
+    def write_uart(self, device: str, data: [int]):
         pass
 
     def __init_subclass__(cls, **kwargs):

@@ -20,16 +20,16 @@ class InvertedControllerFactory:
         for controller in cfg:
             try:
                 controller_instance = next(
-                    instance
-                    for instance in BaseController.__subclasses__()
-                    if instance.__name__ == controller["controller"]
+                    defined_controller
+                    for defined_controller in BaseController.__subclasses__()
+                    if defined_controller.__name__ == controller["controller"]
                 )()
             except StopIteration:
                 raise Exception(
                     f'controller {controller["controller"]} not defined in ./controllers'
                 )
             except KeyError:
-                raise Exception(f"check cfg file, no controller field defined")
+                raise Exception("check cfg file, no controller field defined")
             for device in controller["devices"]:
                 try:
                     settings_dataclass = next(
@@ -40,15 +40,13 @@ class InvertedControllerFactory:
                     )(**controller["devices"][device]["settings"])
                 except ValueError:
                     print(
-                        f'interfejs zdefiniowany w configu jako:{controller["devices"][device]["type"]} nie jest obslugiwany przez ten tester'
+                        f'Interface defined as :{controller["devices"][device]["type"]} is not supported by the tester {controller_instance}'
                     )
-                try:
-                    dut_dict[device] = {
-                        "controller": controller_instance,
-                        "settings": settings_dataclass,
-                    }
-                except ValueError:
-                    pass
+                dut_dict[device] = {
+                    "controller": controller_instance,
+                    "settings": settings_dataclass,
+                }
+               
         return dut_dict
 
 

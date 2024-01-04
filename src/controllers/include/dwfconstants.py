@@ -1,7 +1,5 @@
 """
    DWFConstants (definitions file for DWF library)
-   Author:  Digilent, Inc.
-   Revision:  2021-12-09
 
    Must install:                       
        Python 2.7 or 3

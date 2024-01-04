@@ -15,7 +15,7 @@ class BaseController:
 
     def register_device(self, interface_name: str, settings: Settings):
         if settings.eInterface in self.eInterface:
-            self.settings[interface_name] = settings
+            pass
         else:
             raise ValueError(f"{interface_name} can not be handled by {self.__name__}")
 

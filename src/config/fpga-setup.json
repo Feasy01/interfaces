@@ -1,0 +1,30 @@
+[
+    {
+        "controller":"DigitalDiscoveryMultiplexController",
+        "devices":{
+            "Dout2":{
+                "type":"GPIO",
+                "settings":{
+                    "pin":2,
+                    "default":0
+                }
+            },
+            "Dout3":{
+                "type":"GPIO",
+                "settings":{
+                    "pin":3,
+                    "default":0
+                }
+            },
+            "Dout4":{
+                "type":"GPIO",
+                "settings":{
+                    "pin":4,
+                    "default":0
+                }
+            }
+        }
+        
+    }
+
+]

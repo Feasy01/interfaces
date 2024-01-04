@@ -16,5 +16,5 @@ async def set_current_dut_configuration(Request: Request) -> {}:
     new_config = await Request.json()
     manager = Request.app.state.manager
     manager.dut.clear()
-    manager.set_config(new_config)
+    await manager.set_config(new_config)
     return manager.dut

@@ -1,51 +1,71 @@
-import time
-from enum import Enum
-from typing import List, Optional, Annotated
-from ctypes import *
-from pydantic import BaseModel
-
-from fastapi import APIRouter, Request, Body
+from typing import List
+from pydantic import BaseModel,validator, Field
+from fastapi import APIRouter, Request
 
 
 router = APIRouter()
 
 
 class WriteI2C(BaseModel):
-    data: bytes
-    address: bytes
+    device:str
+    data: List[int] = Field(default_factory=list)
+    address: int = Field(default=0x1D)
+    @validator("data")
+    def data_is_ubyte(cls,data:[int]):
+        if max(data) >256:
+            raise ValueError("item in data overflows ubyte range")
+        return data
+    @validator("address")
+    def address_is_ubyte(cls,address:int):
+        if address >255:
+            raise ValueError("address is not in ubyte range")
+        return address
 
+    
+class ReadI2C(BaseModel):
+    device:str
+    size:int = Field(default= 1)
+    address:int =Field(default=0x1D)
+    @validator("address")
+    def address_is_ubyte(cls,address:int):
+        if address >255:
+            raise ValueError("address is not in ubyte range")
+    @validator("size")
+    def size_is_not_100(cls,size):
+        if size >100:
+            return 100
+        return size
 
-@router.post("/read/{device}")
-def read_i2c(Request: Request, device: str, size: int) -> {}:
-    print(size)
+class SpyI2C(BaseModel):
+    device:str
+    nTransactions:int | None
+    @validator("nTransactions", always=True)
+    def nTransactions_default_value(cls,nTransactions):
+        if nTransactions > 0:
+            return nTransactions
+        return 1
+        
+    
+    
+@router.post("/read")
+def read_i2c(Request: Request, data:ReadI2C) -> {}:
+    print(data.size)
     manager = Request.app.state.manager
-    print(device, size)
-    result = manager.read_i2c(device, size)
-    # print(manager.dut)
-    return result.result()
+    future_result = manager.read_i2c(data.device, data.size,data.address)
+    return future_result.result()
 
 
-@router.post("/write/{device}")
-async def write_i2c(Request: Request, device: str, unicode: WriteI2C) -> {}:
+@router.post("/write")
+async def write_i2c(Request: Request, data:WriteI2C) -> {}:
     manager = Request.app.state.manager
-    # data = bytes(unicode.data, encoding="raw_unicode_escape")
-    # address = bytes(unicode.address, encoding="raw_unicode_escape")
-    help = (c_ubyte * len(unicode.data))(*unicode.data)
-    print(list(help))
-    c = bytes.fromhex(unicode.data)
-    print(c)
-    a = int.from_bytes(unicode.data, byteorder="little")
-    print(a)
-    print(unicode.data, unicode.address)
-    # result = manager.write_i2c(device, len(data), data, address)
-    return unicode
+    future_result = manager.write_i2c(data.device, len(data.data), data.data, data.address)
+    return future_result.result()
 
 
-@router.post("/spy/{device}")
+@router.post("/spy")
 async def spy_i2c(
-    Request: Request, device: str, nsamples: Annotated[int, Body()]
+    Request: Request, data:SpyI2C
 ) -> {}:
     manager = Request.app.state.manager
-    result = manager.spy_i2c(device, nsamples)
-    # print(manager.dut)
-    return result.result()
+    future_result = manager.spy_i2c(data.device, data.nTransactions)
+    return future_result.result()

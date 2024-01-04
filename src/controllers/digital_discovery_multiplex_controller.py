@@ -6,7 +6,22 @@ from ..interface.spi import SPI, SPISettings
 from ..interface.uart import UART, UARTSettings
 from ..interface.qspi import QSPI, QSPISettings
 from ..interface.gpio import GPIO, GPIOSettings
-from ctypes import *
+
+
+from ctypes import (
+    c_ubyte,
+    byref,
+    c_int,
+    c_uint32,
+    c_double,
+    cdll,
+    CDLL,
+    c_char,
+    create_string_buffer,
+    c_byte,
+    sizeof,
+)
+from typing import List
 from .include.dwfconstants import *
 import time
 import asyncio
@@ -23,6 +38,7 @@ class DigitalDiscoveryMultiplexController(
     Klasa jest fabryka obiektow, trzyma instancje w wewnetrznej pamieci i zwraca wskazniki do nich
     """
 
+    # TODO handle case when there are multiple discovery available
     def __init__(self):
         super().__init__()
         self.hdwf: c_int = c_int()
@@ -31,7 +47,6 @@ class DigitalDiscoveryMultiplexController(
             szerr: [c_char] = create_string_buffer(512)
             dwf.FDwfGetLastErrorMsg(szerr)
             assert 0, str(szerr.value)
-        # TODO handle case when there are multiple discovery available
 
     def __del__(self):
         dwf.FDwfDeviceClose(self.hdwf)
@@ -39,7 +54,7 @@ class DigitalDiscoveryMultiplexController(
     def register_device(self, interface_name: str, settings: Settings):
         super().register_device(interface_name, settings)
 
-    # TODO zmienic print na return jak dostane Evalke
+    # TODO change print to return when there is an eval board to test with
     async def read_can(self, device: CANSettings) -> (bool, bytes):
         self._configure_can(device)
         vID = c_int()
@@ -93,48 +108,48 @@ class DigitalDiscoveryMultiplexController(
         return (True, b"returned value")
 
     # TODO rozwazyc czy writing moze byc blkoujacy czy ma byc nonblocking
-    def write_can(self, device: CANSettings, data: bytes) -> bool:
+    def write_can(self, device: CANSettings, data: List[int]) -> bool:
         self._configure_can(device)
         rgbTX = (c_ubyte * len(data))(*data)
-
         print("Sending on TX...")
         #                    HDWF  ID           fExtended  fRemote   cDLC              *rgTX
         dwf.FDwfDigitalCanTx(
             self.hdwf, c_int(0x3FD), c_int(0), c_int(0), c_int(len(rgbTX)), rgbTX
         )
-        print(rgbTX[0])
+        return True
 
     async def read_i2c(
-        self, device: I2CSettings, size, address: bytes = b"0x1D"
-    ) -> (bool, bytes):
+        self, device: I2CSettings, size: int, address: int = 0x1D
+    ) -> (bool, List[int]):
         iNak = c_int()
         self._configure_i2c(device, iNak)
         rgRX = (c_ubyte * size)()
 
         while 1:
-            # print(iNak.value)
             dwf.FDwfDigitalI2cRead(
                 self.hdwf, c_int(address << 1), rgRX, c_int(size), byref(iNak)
-            )  # read 16 bytes
-            asyncio.sleep(0.01)
-            print(list(rgRX))
+            )
+            if len(rgRX) > 1:
+                break
+            await asyncio.sleep(0.001)
 
-        #         print(list(rgRX))
         return (True, list(rgRX))
 
-    def write_i2c(
-        self, device: I2CSettings, data: bytes, address: bytes = b"0x1D"
-    ) -> (bool, bytes):
+    def write_i2c(self, device: I2CSettings, data: List[int], address: int = 0x1D) -> bool:
         iNak = c_int()
         self._configure_i2c(device, iNak)
         rgTX: [c_ubyte] = (c_ubyte * len(data))(*data)
-        address = (b_ubyte)(address)
+        address = (c_ubyte)(address)
         iNak: c_int = c_int()
         dwf.FDwfDigitalI2cWrite(
             self.hdwf, c_int(address << 1), rgTX, c_int(len(data)), byref(iNak)
-        )  # write 16 bytes
+        )  # write len(data) bytes
+        return True
 
-    async def spy_i2c(self, device: I2CSettings, size) -> [c_ubyte]:
+    async def spy_i2c(
+        self, device: I2CSettings, nTransactions: int, timeout: int = 30
+    ) -> List[str]:
+        response = []
         iNak = c_int()
         self._configure_i2c(device, iNak)
         dwf.FDwfDigitalI2cSpyStart(self.hdwf)
@@ -143,7 +158,8 @@ class DigitalDiscoveryMultiplexController(
         fStop = c_int()
         rgData = (c_ubyte * nData)()
         cData = c_int()
-        while True:
+        tsec = time.perf_counter() + timeout
+        while nTransactions > 0 or time.perf_counter() < tsec:
             cData.value = nData
             if (
                 dwf.FDwfDigitalI2cSpyStatus(
@@ -160,7 +176,7 @@ class DigitalDiscoveryMultiplexController(
                 szerr = create_string_buffer(512)
                 dwf.FDwfGetLastErrorMsg(szerr)
                 print(str(szerr.value))
-                break
+                return (False, str(szerr.value))
 
             msg = []
             if fStart.value == 1:
@@ -169,7 +185,6 @@ class DigitalDiscoveryMultiplexController(
                 msg.append("ReStart")
 
             for i in range(cData.value):
-                # first data is address when fStart is not zero
                 if i == 0 and fStart.value != 0:
                     msg.append(hex(rgData[i] >> 1))
                     if rgData[i] & 1:
@@ -188,18 +203,20 @@ class DigitalDiscoveryMultiplexController(
                 msg.append("Error: " + str(iNak.value))
 
             if len(msg):
-                return msg
-            asyncio.sleep(1)
+                response.append(msg)
+                nTransactions -= 1
+            await asyncio.sleep(1)
+        return response
 
-    def read_spi(self, device: SPISettings, size: int) -> (bool, bytes):
+    def read_spi(self, device: SPISettings, size: int) -> (bool, List[c_ubyte]):
         self._configure_spi(device)
         rgbRX = (c_ubyte * size)()
         dwf.FDwfDigitalSpiRead(
             self.hdwf, c_int(1), c_int(8), rgbRX, c_int(len(rgbRX))
         )  # read array of 8 bit (byte) length elements
-        return (True, b"returned value")
+        return (True, list(rgbRX))
 
-    def write_spi(self, device: SPISettings, data: bytes) -> ([c_ubyte], [c_ubyte]):
+    def write_spi(self, device: SPISettings, data: [c_ubyte]) -> ([c_ubyte], [c_ubyte]):
         self._configure_spi(device)
         rgbTX = (c_ubyte * len(data))(*data)
         dwf.FDwfDigitalSpiWrite(
@@ -216,10 +233,10 @@ class DigitalDiscoveryMultiplexController(
         sts = c_byte()
 
         # 0 represents DIO-24 with order 1
-        idxCS = device.cs - 24  # DIO-24
-        idxClk = device.clk - 24  # DIO-25
-        idxMosi = device.mosi - 24  # DIO-26
-        idxMiso = device.miso - 24  # DIO-27
+        idxCS: int = device.cs - 24  # DIO-24
+        idxClk: int = device.clk - 24  # DIO-25
+        idxMosi: int = device.mosi - 24  # DIO-26
+        idxMiso: int = device.miso - 24  # DIO-27
         nBits = 8
 
         print("Configuring SPI spy...")
@@ -309,37 +326,39 @@ class DigitalDiscoveryMultiplexController(
         except KeyboardInterrupt:
             pass
 
-    def read_uart(self, device: UARTSettings, size: int) -> (bool, bytes):
+    def read_uart(self, device: UARTSettings, size: int, time: int) -> (bool, bytes):
         fParity = c_int()
         cRX = c_int()
         self._configure_uart(device, cRX, fParity)
         rgRX = create_string_buffer(size)
 
-        tsec = time.perf_counter() + 10  # receive for 10 seconds
+        tsec = time.perf_counter() + time  # receive for time seconds
         print("Receiving on RX...")
         while time.perf_counter() < tsec:
-            time.sleep(0.01)
+            asyncio.sleep(0.01)
             dwf.FDwfDigitalUartRx(
                 self.hdwf, rgRX, c_int(sizeof(rgRX) - 1), byref(cRX), byref(fParity)
             )  # read up to 8k chars at once
             if cRX.value > 0:
                 rgRX[cRX.value] = 0  # add zero ending
-                print(rgRX.value.decode(), end="", flush=True)
+                return (True, rgRX.value.decode())
             if fParity.value != 0:
                 print("Parity error {}".format(fParity.value))
 
-        return (True, b"returned value")
-
-    def write_uart(self, device: UARTSettings, data: bytes) -> bool:
+    def write_uart(self, device: UARTSettings, data: str | List[int]) -> bool:
         fParity = c_int()
         cRX = c_int()
         self._configure_uart(device, cRX, fParity)
-        rgTX = create_string_buffer(data)
+        rgTX = (
+            create_string_buffer(bytes(data, "utf-8"))
+            if isinstance(data, str)
+            else create_string_buffer(bytes(data))
+        )
         dwf.FDwfDigitalUartTx(
             self.hdwf, rgTX, c_int(sizeof(rgTX) - 1)
         )  # send text, trim zero ending
 
-    def write_qspi(self, device: QSPISettings, data: bytes) -> None:
+    def write_qspi(self, device: QSPISettings, data: [c_ubyte]) -> None:
         self._configure_qspi(device)
         rgbTX = (c_ubyte * len(data))(*data)
         dwf.FDwfDigitalSpiWrite(
@@ -355,6 +374,10 @@ class DigitalDiscoveryMultiplexController(
         return (True, b"returned value")
 
     # TODO handle different sample sizes(like 8 pins, 16pins etc.)
+
+    def read_gpio(self):
+        pass
+
     async def record_gpio(
         self,
         gpios: [GPIOSettings],
@@ -362,7 +385,7 @@ class DigitalDiscoveryMultiplexController(
         sample_rate: int = 1000000,
         rising_edge: [int] = None,
         falling_edge: [int] = None,
-    ) -> (bool, bytearray):
+    ) -> [int]:
         # Samples = 100000
         rEdge = (
             reduce(
@@ -382,19 +405,23 @@ class DigitalDiscoveryMultiplexController(
             if falling_edge
             else c_int(0)
         )
+        print(rEdge, fEdge)
         # rgwSamples = (c_uint16*nSamples)()
         hzDI = c_double()
         sts = c_ubyte()
 
         dwf.FDwfDigitalInInternalClockInfo(self.hdwf, byref(hzDI))
         print("DigitanIn base freq: " + str(hzDI.value))
-        nSamples = (period_ms * 1000) / hzDI.value
-        rgwSamples = (c_uint32 * nSamples)()
+        dwf.FDwfDigitalInDividerSet(
+            self.hdwf, c_int(int(hzDI.value / sample_rate))
+        )  # 100MHz
 
+        nSamples = int((period_ms * sample_rate) / 1000)
+        rgwSamples = (c_uint32 * nSamples)()
+        print(nSamples, period_ms, sample_rate)
+        print("divider", hzDI.value / sample_rate)
         # in record mode samples after trigger are acquired only
         dwf.FDwfDigitalInAcquisitionModeSet(self.hdwf, acqmodeSingle)
-        # sample rate = system frequency / divider, 100MHz/1000 = 100kHz
-        dwf.FDwfDigitalInDividerSet(self.hdwf, c_int(int(hzDI.value / 100e6)))
         # 16bit per sample format
         dwf.FDwfDigitalInSampleFormatSet(self.hdwf, c_int(32))
         # number of samples after trigger
@@ -429,6 +456,7 @@ class DigitalDiscoveryMultiplexController(
 
         dwf.FDwfDigitalInStatusData(self.hdwf, byref(rgwSamples), 4 * nSamples)
         print(list(rgwSamples))
+        return list(rgwSamples)
 
     def _configure_can(self, settings: CANSettings) -> None:
         dwf.FDwfDigitalCanReset(self.hdwf)
@@ -445,10 +473,18 @@ class DigitalDiscoveryMultiplexController(
         )  # initialize RX reception
 
     def _configure_i2c(self, settings: I2CSettings, iNak: c_int) -> None:
+        """
+        configures i2c read/write operations -> must be pins24:39 because of i/o support
+
+        Args:
+            settings (I2CSettings): to set correct pins and freq
+            iNak (c_int): to check the pullups
+        """
+        print(settings.scl, settings.sda)
         dwf.FDwfDigitalI2cReset(self.hdwf)
         dwf.FDwfDigitalI2cRateSet(self.hdwf, c_double(settings.frequency))  # frequency
-        dwf.FDwfDigitalI2cSclSet(self.hdwf, c_int(settings.scl))  # SCL
-        dwf.FDwfDigitalI2cSdaSet(self.hdwf, c_int(settings.sda))  # SDA
+        dwf.FDwfDigitalI2cSclSet(self.hdwf, c_int(settings.scl - 24))  # SCL
+        dwf.FDwfDigitalI2cSdaSet(self.hdwf, c_int(settings.sda - 24))  # SDA
         dwf.FDwfDigitalI2cClear(self.hdwf, byref(iNak))
         if iNak.value == 0:
             print("I2C bus error. Check the pull-ups.")

@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from src.manager.tester_manager import TesterManager
-from src.factory.controllers_inverted_factory import InvertedControllerFactory
 from src.utils.parsers.cfg_json_parser import CfgParserJson
 from .routes import spi, dut, i2c, uart, qspi, can, gpio
 
@@ -9,7 +8,9 @@ from .routes import spi, dut, i2c, uart, qspi, can, gpio
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     app.state.manager = TesterManager()
-    app.state.manager.set_config(CfgParserJson.parse_cfg("src/config/demo-setup.json"))
+    app.state.manager.set_config(
+        CfgParserJson.parse_cfg("src/config/demo-setup.json")
+    )
     yield
     # app.state.manager.__del__()
 

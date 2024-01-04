@@ -18,11 +18,11 @@ class SPI(Interface):
 
     @abstractmethod
     def read_spi(self) -> (bool, bytearray):
-        pass
+        ...
 
     @abstractmethod
     def write_spi(self):
-        pass
+        ...
 
     @abstractmethod
     def spy_spi(self, device: str):

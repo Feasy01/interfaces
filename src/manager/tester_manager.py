@@ -1,11 +1,10 @@
-from ..interface.spi import SPI
-from ..interface.i2c import *  # noqa: F403
-from ..interface.uart import *  # noqa: F403
-from ..interface.spi import *  # noqa: F403
-from ..interface.gpio import *  # noqa: F403
-from ..interface.can import CAN
-from ..interface.ssh import SSH
-from ..controllers.base_controller import BaseController
+from ..interface.i2c import I2C  # noqa: F401
+from ..interface.uart import UART # noqa: F401
+from ..interface.spi import SPI  # noqa: F401
+from ..interface.gpio import GPIO# noqa: F401
+from ..interface.can import CAN# noqa: F401
+from ..interface.ssh import SSH# noqa: F401
+from ..controllers.base_controller import BaseController# noqa: F401
 from ..utils.parsers.cfg_json_parser import *  # noqa: F403
 from ..factory.controllers_inverted_factory import InvertedControllerFactory
 from ctypes import *  # noqa: F403
@@ -25,7 +24,7 @@ class AsyncLoopThread(Thread):
         self.loop.run_forever()
 
 
-class TesterManager(BaseController, CAN, SPI, I2C, UART, SSH):  # noqa: F405
+class TesterManager:  # noqa: F405
     """
     Menager przekazujacy zlecenia do odpowiednich kontrollerow.
     """
@@ -35,8 +34,8 @@ class TesterManager(BaseController, CAN, SPI, I2C, UART, SSH):  # noqa: F405
         self.event_loop = AsyncLoopThread()
         self.event_loop.start()
 
-    def _run_coroutine_threadsafe(self, coro, *args):
-        return asyncio.run_coroutine_threadsafe(coro(*args), self.event_loop.loop)
+    def _run_coroutine_threadsafe(self, method, *args):
+        return asyncio.run_coroutine_threadsafe(method(*args), self.event_loop.loop)
 
     def _get_controller(self, device: str):
         try:
@@ -53,7 +52,7 @@ class TesterManager(BaseController, CAN, SPI, I2C, UART, SSH):  # noqa: F405
             method = getattr(controller, method_name, None)
             if method:
                 return self._run_coroutine_threadsafe(
-                    method, self.dut[device].settings, *args
+                    method, self.dut[device]["settings"], *args
                 )
             else:
                 print(
@@ -68,8 +67,13 @@ class TesterManager(BaseController, CAN, SPI, I2C, UART, SSH):  # noqa: F405
         if controller:
             method = getattr(controller, method_name, None)
             if method:
-                settings = [self.dut[device].settings for device in devices]
-                return self._run_coroutine_threadsafe(method, settings, *args)
+                try:
+                    settings = [self.dut[device]["settings"] for device in devices]
+                    return self._run_coroutine_threadsafe(method, settings, *args)
+                except KeyError as e:
+                    error = asyncio.Future()
+                    error.set_result(e)
+                    return error
             else:
                 print(
                     f"Method {method_name} not found in controller for device {devices[0]}"
@@ -79,28 +83,30 @@ class TesterManager(BaseController, CAN, SPI, I2C, UART, SSH):  # noqa: F405
     def set_config(self, dut: {}):
         self.dut = InvertedControllerFactory.generate_controllers_from_cfg(dut)
 
-    def write_can(self, device: str, data: bytes) -> Future[Any]:
+    def write_can(self, device: str, data: [int]) -> Future[Any]:
         return self._generic_controller_method(device, "write_can", data)
 
     def read_can(self, device: str) -> Future[Any]:
         return self._generic_controller_method(device, "read_can")
 
-    def write_i2c(self, device: str, data, address: bytes = b"0x1D") -> Future[Any]:
+    def write_i2c(
+        self, device: str, data: [int], address: int = 0x1D
+    ) -> Future[Any]:
         return self._generic_controller_method(device, "write_i2c", data, address)
 
-    def read_i2c(self, device: str, data, address: bytes = b"0x1D") -> Future[Any]:
-        return self._generic_controller_method(device, "read_i2c", data, address)
+    def read_i2c(self, device: str, size:int,address: int = 0x1D) -> Future[Any]:
+        return self._generic_controller_method(device, "read_i2c",size, address)
 
-    def spy_i2c(self, device: str, data: int) -> Future[Any]:
-        return self._generic_controller_method(device, "spy_i2c", data)
+    def spy_i2c(self, device: str, nTransactions: int) -> Future[Any]:
+        return self._generic_controller_method(device, "spy_i2c", nTransactions)
 
-    def write_uart(self, device: str, data: bytes) -> Future[Any]:
+    def write_uart(self, device: str, data: [int]) -> Future[Any]:
         return self._generic_controller_method(device, "write_uart", data)
 
-    def read_uart(self, device: str, size: int) -> Future[Any]:
-        return self._generic_controller_method(device, "read_uart")
+    def read_uart(self, device: str, size: int,time:int) -> Future[Any]:
+        return self._generic_controller_method(device, "read_uart",size,time)
 
-    def write_spi(self, device: str, size: int, data: bytes) -> Future[Any]:
+    def write_spi(self, device: str, size: int, data: [int]) -> Future[Any]:
         return self._generic_controller_method(device, "write_spi", size, data)
 
     def read_spi(self, device: str, size: int) -> Future:

@@ -5,18 +5,18 @@
             "spi-test": {
                 "type":"SPI",
                 "settings":{
-                    "clk":25,
-                    "miso":27,
+                    "clk":24,
+                    "miso":29,
                     "mosi":26,
-                    "cs":24,
+                    "cs":25,
                     "frequency":100000
             
             }
             },"i2c-test":{
                 "type":"I2C",
                 "settings":{
-                    "scl":25,
-                    "sda":24,
+                    "scl":28,
+                    "sda":30,
                     "frequency":100000
                 }
             }
